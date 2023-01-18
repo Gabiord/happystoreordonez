@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/happystoreordonez/static/css/main.a1e87171.css",
+    "main.js": "/happystoreordonez/static/js/main.b8e9fb1d.js",
+    "static/media/logo512.png": "/happystoreordonez/static/media/logo512.47f5abf1efe789bd8be2.png",
+    "index.html": "/happystoreordonez/index.html",
+    "main.a1e87171.css.map": "/happystoreordonez/static/css/main.a1e87171.css.map",
+    "main.b8e9fb1d.js.map": "/happystoreordonez/static/js/main.b8e9fb1d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a1e87171.css",
+    "static/js/main.b8e9fb1d.js"
+  ]
+}
