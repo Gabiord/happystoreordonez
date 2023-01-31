@@ -27,7 +27,6 @@ const ItemCount = ({onAdd}) => {
 
   const confirm = (e) => {
     e.preventDefault()
-    setTotalProductos(totalProductos+contador)
     onAdd(contador)
   }
 

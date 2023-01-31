@@ -1,12 +1,25 @@
 import React from "react"
 import ItemCount from "./ItemCount";
+import { useCart } from "../context/CartContext";
+
 
 function ItemDetail({producto}) {
 
-  const onAdd = (cantidad) => {
-    const objeto=[producto.title,producto.price,cantidad]
+  const { cart } = useCart()
+  const {setCart} = useCart()
+  
 
-    console.log(objeto)
+  const onAdd = (cantidad) => {
+    const objeto={title: producto.title,
+                  price: producto.price,
+                  image: producto.image,
+                  quantity: cantidad,
+                  total:cantidad*producto.price}
+
+    const copia = cart.slice(0)
+    copia.push(objeto)
+    setCart(copia)
+    console.log(cart)
 
   }
 
@@ -31,8 +44,6 @@ function ItemDetail({producto}) {
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{producto.title}</h1>
           </div>
         
-        
-
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <p className="text-3xl tracking-tight text-gray-900">$ {producto.price}</p>

@@ -5,7 +5,6 @@ import { useCart } from '../context/CartContext';
 function CartWidget (){
 
   const { totalProductos } = useCart()
-  console.log(totalProductos)
 
     return(
         <div className="ml-4 flow-root lg:ml-6">
@@ -15,7 +14,6 @@ function CartWidget (){
                 aria-hidden="true"
               />
               <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{totalProductos}</span>
-              <span className="sr-only">items in cart, view bag</span>
             </Link>
         </div>
     )
