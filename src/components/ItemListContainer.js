@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
+import { db } from "../firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+
 
 function ItemListContainer () {
     const [load, setLoad] = useState(false);
@@ -10,26 +13,25 @@ function ItemListContainer () {
     const categoryId = category.id
     console.log(categoryId)
 
+
     useEffect(()=>{
 
-        const URL = categoryId ? `https://fakestoreapi.com/products/category/${categoryId}/`: `https://fakestoreapi.com/products/`;
+        const productsCollection = collection(db,"productos")
+        const filtro = categoryId ? query(productsCollection,where("category","==",categoryId)) : productsCollection;
 
-        const pedido= fetch(URL)
-    
-        pedido
-            .then((respuesta) => {
-            const productos = respuesta.json()
-            return productos
+        const pedidoFirestore = getDocs(filtro)
 
-        })
-        .then((productos) => {
+        pedidoFirestore
+        .then((respuesta)=>{
+
+            const productos=respuesta.docs.map(doc=>({... doc.data(), id: doc.id}))
             setProductos(productos)
             setLoad(true)
         })
-        .catch((error) => {
-            console.log(error)
+        .catch((error)=>{
+            console.log("error")
         })
-
+        
     }, [categoryId])
    
     return (

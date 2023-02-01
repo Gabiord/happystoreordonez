@@ -31,8 +31,8 @@ const navigation = {
           items: [
             { name: 'Ropa de Hombre', href: "/category/men's clothing"},
             { name: 'Ropa de Mujer', href: "/category/women's clothing" },
-            { name: 'Accesorios', href: "/category/jewelery" },
-            { name: 'Electronica', href: "/category/electronics" },
+            { name: 'Accesorios', href: "/category/accessories" },
+            { name: 'Ropa de niños', href: "/category/kid's clothing" },
 
           ],
         },
