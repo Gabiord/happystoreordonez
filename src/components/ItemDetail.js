@@ -1,28 +1,27 @@
 import React from "react"
 import ItemCount from "./ItemCount";
 import { useCart } from "../context/CartContext";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 
 
 function ItemDetail({producto}) {
 
-  const { cart } = useCart()
-  const {setCart} = useCart()
-  
+  const {agregarProductoAlCarrito}= useCart()
+  const [cantidadContador, setCantidadContador]=useState(1)
 
-  const onAdd = (cantidad) => {
-    const objeto={title: producto.title,
-                  price: producto.price,
-                  image: producto.image,
-                  quantity: cantidad,
-                  total:cantidad*producto.price}
+  const { id } = useParams()
+  console.log (id)
 
-    const copia = cart.slice(0)
-    copia.push(objeto)
-    setCart(copia)
-    console.log(cart)
-
+  const onAdd = (valor) => {
+    setCantidadContador(valor)
   }
 
+  const handleClick = () => {
+    agregarProductoAlCarrito({producto},cantidadContador,id)
+  }
+  
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -47,9 +46,12 @@ function ItemDetail({producto}) {
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <p className="text-3xl tracking-tight text-gray-900">$ {producto.price}</p>
-            <form className="mt-10">
+            <form className="mt-5">
               <ItemCount onAdd={onAdd}/>
             </form>
+            <button onClick={handleClick} className="flex w-auto mt-10 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+               Agregar al carrito
+            </button>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
