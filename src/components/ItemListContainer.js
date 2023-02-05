@@ -11,9 +11,7 @@ function ItemListContainer () {
 
     const category =  useParams()
     const categoryId = category.id
-    console.log(categoryId)
-
-
+   
     useEffect(()=>{
 
         const productsCollection = collection(db,"productos")

@@ -10,15 +10,15 @@ export const useCart = () => {
     return valor
 }
 
-
-
 const CartContext = ({children}) => {
 
     const [cart, setCart]=useState([]);
     const [totalProductos, setTotalProductos]=useState(0)
 
-
     const agregarProductoAlCarrito = ({producto},cantidadContador,id) => {
+
+        const cantidadPrevia=cart.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0);
+        setTotalProductos (cantidadPrevia+cantidadContador);
 
         if(cart.some(product => product.id === id)){
             const index = cart.findIndex(product => product.id === id)
@@ -39,17 +39,22 @@ const CartContext = ({children}) => {
             copia.push(productToCart)
             setCart(copia)
             }
+    }
+
+    const eliminarProductoDelCarrito = (id) =>{
+        const copia = cart.filter(producto => producto.id != id );
+        setCart(copia)
 
     }
 
     const valorDelContexto = {
-      cart:cart,
-      totalProductos: totalProductos,
-      setCart: setCart,
-      setTotalProductos: setTotalProductos,
-      agregarProductoAlCarrito: agregarProductoAlCarrito
+        cart:cart,
+        totalProductos: totalProductos,
+        setCart: setCart,
+        setTotalProductos: setTotalProductos,
+        agregarProductoAlCarrito: agregarProductoAlCarrito,
+        eliminarProductoDelCarrito: eliminarProductoDelCarrito
     }
-
 
     return(
         <Provider value={valorDelContexto}>
@@ -57,6 +62,5 @@ const CartContext = ({children}) => {
         </Provider>
     )
 }
-
 
 export default CartContext;

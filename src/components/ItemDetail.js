@@ -12,7 +12,6 @@ function ItemDetail({producto}) {
   const [cantidadContador, setCantidadContador]=useState(1)
 
   const { id } = useParams()
-  console.log (id)
 
   const onAdd = (valor) => {
     setCantidadContador(valor)

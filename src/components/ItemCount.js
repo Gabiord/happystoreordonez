@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 
-const ItemCount = ({onAdd}) => {
+const ItemCount = ({onAdd}, props) => {
 
   const [contador, setContador]=useState(1)
 
@@ -23,6 +23,8 @@ const ItemCount = ({onAdd}) => {
     }
   }
 
+  const isInCart = props.isInCart
+
   return (
     <div>
         <div className="custom-number-input h-10 w-auto">
@@ -32,7 +34,6 @@ const ItemCount = ({onAdd}) => {
                 <input className="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value={contador} min="1" />
                 <button onClick={increment} className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </button>
             </div>
-
         </div>
     </div>
   )
