@@ -12,13 +12,22 @@ export const useCart = () => {
 
 const CartContext = ({children}) => {
 
-    const [cart, setCart]=useState([]);
-    const [totalProductos, setTotalProductos]=useState(0)
+    const inicioSt = localStorage.length>0 ? (JSON.parse(localStorage.getItem("carrito"))):[];    
+    const [cart, setCart]=useState(inicioSt);
+    localStorage.setItem("carrito", JSON.stringify(cart))
+
+    const inicioTP= cart.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0)
+    const [totalProductos, setTotalProductos]=useState(inicioTP)
+
+
+    const actualizarCartWidget = (array,suma) =>{
+        const cantidad=array.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0);
+        setTotalProductos (cantidad+suma)
+    }
 
     const agregarProductoAlCarrito = ({producto},cantidadContador,id) => {
 
-        const cantidadPrevia=cart.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0);
-        setTotalProductos (cantidadPrevia+cantidadContador);
+        actualizarCartWidget(cart,cantidadContador);
 
         if(cart.some(product => product.id === id)){
             const index = cart.findIndex(product => product.id === id)
@@ -38,14 +47,25 @@ const CartContext = ({children}) => {
             const copia = cart.slice(0)
             copia.push(productToCart)
             setCart(copia)
+            console.log (cart)
             }
+        
     }
 
     const eliminarProductoDelCarrito = (id) =>{
         const copia = cart.filter(producto => producto.id != id );
         setCart(copia)
+        actualizarCartWidget(copia,0);
 
     }
+
+    const actualizarItemDelCarrito= (id, valor) =>{
+        const index = cart.findIndex(product => product.id === id)
+        cart[index].quantity=valor;
+        cart[index].total=cart[index].price*cart[index].quantity
+        actualizarCartWidget(cart,0);
+    }
+    
 
     const valorDelContexto = {
         cart:cart,
@@ -53,7 +73,8 @@ const CartContext = ({children}) => {
         setCart: setCart,
         setTotalProductos: setTotalProductos,
         agregarProductoAlCarrito: agregarProductoAlCarrito,
-        eliminarProductoDelCarrito: eliminarProductoDelCarrito
+        eliminarProductoDelCarrito: eliminarProductoDelCarrito,
+        actualizarItemDelCarrito : actualizarItemDelCarrito
     }
 
     return(

@@ -1,43 +1,52 @@
 import React from 'react'
 import { useCart } from '../context/CartContext'
-import { useParams } from 'react-router-dom'
 import ItemCount from './ItemCount'
 import { useState } from 'react'
 
 const ProductInCart = ({product}) => {
 
-  const {eliminarProductoDelCarrito}= useCart()
+  const isCarrito= true
+  const productQuantity=product.quantity
+  const {eliminarProductoDelCarrito,actualizarItemDelCarrito}= useCart()
+  const [subtotal, setSubtotal]=useState(product.total)
 
-  const handleClick = () => {
-    eliminarProductoDelCarrito(product.id)
-  }
 
   const onAdd = (valor) => {
-    console.log(valor)
+    actualizarItemDelCarrito(product.id, valor)
+    setSubtotal(product.total)
+  }
+
+  const handleRemove = () => {
+    eliminarProductoDelCarrito(product.id)
   }
 
   return (
     <>
-      <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-        <img src={product.image} alt="product-image" className="w-full rounded-lg sm:w-40" />
-        <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-          <div className="mt-5 sm:mt-0">
-            <h2 className="text-lg font-bold text-gray-900">{product.title}</h2>
-            <p className="mt-1 text-xs text-gray-700">$ {product.price}</p>
+        <div class="md:flex items-strech py-1 md:py-5 lg:py-1 border-gray-100 border-t-2">
+          <div class="md:w-1/5 2xl:w-1/5 w-full">
+            <img src={product.image} alt={product.title} class="object-center object-cover md:block rounded-lg" />
           </div>
-          <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-            <ItemCount onAdd={onAdd} value={product.quantity}/>
-            <div className="flex items-center space-x-4">
-              <p className="text-sm">$ {product.total}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"  type='button' onClick={handleClick}>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+          <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
+            <div class="flex items-center justify-between w-full pt-1">
+              <p class="text-base leading-none text-gray-800 dark:text-white">{product.title}</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white">$ {product.price}</p>
+
+            </div>
+            <div class="flex items-center justify-between pt-5">
+              <ItemCount productQuantity={productQuantity} isCarrito={isCarrito} onAdd={onAdd}/>
+              <div class="flex itemms-center">
+                <button onClick={handleRemove} className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Eliminar</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-5">
+              <p class="text-base leading-none text-gray-800 dark:text-white pt-5">Subtotal : ${subtotal}</p>
             </div>
           </div>
         </div>
-      </div>
     </>
   )
+
+
 }
 
 export default ProductInCart
