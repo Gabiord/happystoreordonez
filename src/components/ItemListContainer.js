@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 import { db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { Notify } from "notiflix";
+import { Loading } from "notiflix";
 
 
 function ItemListContainer () {
@@ -13,7 +15,7 @@ function ItemListContainer () {
     const categoryId = category.id
    
     useEffect(()=>{
-
+        Loading.standard('Cargando Productos');
         const productsCollection = collection(db,"productos")
         const filtro = categoryId ? query(productsCollection,where("category","==",categoryId)) : productsCollection;
 
@@ -21,10 +23,10 @@ function ItemListContainer () {
 
         pedidoFirestore
         .then((respuesta)=>{
-
             const productos=respuesta.docs.map(doc=>({... doc.data(), id: doc.id}))
             setProductos(productos)
             setLoad(true)
+            Loading.remove();
         })
         .catch((error)=>{
             console.log("error")

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useContext } from "react"
 import { createContext } from "react"
+import { Notify } from "notiflix"
 
 const context = createContext()
 const Provider = context.Provider
@@ -49,6 +50,8 @@ const CartContext = ({children}) => {
             setCart(copia)
             console.log (cart)
             }
+
+        Notify.success('Se agrego un item al Carrito');    
         
     }
 
