@@ -12,14 +12,12 @@ export const useCart = () => {
 }
 
 const CartContext = ({children}) => {
-
     const inicioSt = localStorage.length>0 ? (JSON.parse(localStorage.getItem("carrito"))):[];    
     const [cart, setCart]=useState(inicioSt);
     localStorage.setItem("carrito", JSON.stringify(cart))
 
     const inicioTP= cart.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0)
     const [totalProductos, setTotalProductos]=useState(inicioTP)
-
 
     const actualizarCartWidget = (array,suma) =>{
         const cantidad=array.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0);
@@ -50,9 +48,7 @@ const CartContext = ({children}) => {
             setCart(copia)
             console.log (cart)
             }
-
         Notify.success('Se agrego un item al Carrito');    
-        
     }
 
     const eliminarProductoDelCarrito = (id) =>{

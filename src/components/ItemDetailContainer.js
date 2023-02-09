@@ -26,7 +26,6 @@ const ItemDetailContainer = ()=> {
             Loading.remove();
             const product=res.data()
             setProducto(product)
-
         })
         .catch((error)=> {
             console.log(error)
