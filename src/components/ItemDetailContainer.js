@@ -16,7 +16,7 @@ const ItemDetailContainer = ()=> {
 
     
     useEffect(()=>{
-        Loading.standard('Cargando');
+        Loading.standard('Cargando', {svgColor: '#4b88a2'});
         const productosColletion = collection(db,"productos")
         const ref = doc(productosColletion, id)
         const pedido= getDoc(ref)

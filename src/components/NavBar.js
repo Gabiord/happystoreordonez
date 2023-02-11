@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from "../images/logo512.png"
 import {Link} from "react-router-dom"
 import CartWidget from './CartWidget'
@@ -12,37 +12,32 @@ const navigation = {
       name: 'Categorias',
       featured: [
         {
-          name: 'Nuevos',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          name: 'Ropa de Mujer',
+          href: "products/category/women's clothing",
+          imageSrc: 'https://img.freepik.com/free-photo/dreamy-young-woman-sunglasses-looking-front_197531-16739.jpg?w=900&t=st=1675964848~exp=1675965448~hmac=0ef3ad8f24703cbc3a0bb54cbb8cd5e9edfb82c53b3e7b9734ef28ab729ce59e',
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
-          name: 'Ofertas',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          name: 'Ropa de Hombre',
+          href: "products/category/men's clothing",
+          imageSrc: 'https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=900&t=st=1675964973~exp=1675965573~hmac=0ce706d63c3580b50b6003ac27db8d8ad8370c4c1907f6ab4429f7bb51d767f8',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
-      ],
-      sections: [
         {
-          id: 'Categorias',
-          name: 'Categorias',
-          items: [
-            { name: 'Ropa de Hombre', href: "/category/men's clothing"},
-            { name: 'Ropa de Mujer', href: "/category/women's clothing" },
-            { name: 'Accesorios', href: "/category/accessories" },
-            { name: 'Ropa de niños', href: "/category/kid's clothing" },
-
-          ],
+          name: 'Accesorios',
+          href: "products/category/accessories",
+          imageSrc: 'https://img.freepik.com/free-photo/little-socks-with-birthday-celebration-pattern_53876-105716.jpg?w=740&t=st=1675965152~exp=1675965752~hmac=6489f58f5dc3c576ef8a1c06237404231fd69a26548ab766fb3270a7498f69c3',
+          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
-      ],
-    },
-  ],
-  pages: [
-    { name: 'Informacion', href: '/Informacion' },
-    { name: 'Contacto', href: '/Contacto' },
-  ],
+        {
+          name: 'Ropa de niños',
+          href: "products/category/kid's clothing",
+          imageSrc: 'https://img.freepik.com/free-photo/banner-with-surprised-children-peeking-edge_155003-10104.jpg?w=900&t=st=1675965043~exp=1675965643~hmac=33e8cd4caafcfc9bd804d92e0a4dfa93c601c72651b56523ea5e81db34e4d8bf',
+          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+        },
+      ]
+    }
+  ]
 }
 
 function classNames(...classes) {
@@ -53,11 +48,11 @@ function NavBar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="bg-white">
+    <div>
 
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
+        <Dialog as="div" className="relative z-40" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -94,118 +89,45 @@ function NavBar() {
 
                 {/* Links */}
                 <Tab.Group as="div" className="mt-2">
-                  <div className="border-b border-gray-200">
-                    <Tab.List className="-mb-px flex space-x-8 px-4">
-                      {navigation.categories.map((category) => (
-                        <Tab
-                          key={category.name}
-                          className={({ selected }) =>
-                            classNames(
-                              selected ? 'text-indigo-600 border-indigo-600' : 'text-gray-900 border-transparent',
-                              'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
-                            )
-                          }
-                        >
-                          {category.name}
-                        </Tab>
-                      ))}
-                    </Tab.List>
-                  </div>
+                  <h1 className='mt-2 block text-xl tracking-normal text-gray-900 pt-8 pl-20'>Categorias</h1>
                   <Tab.Panels as={Fragment}>
                     {navigation.categories.map((category) => (
-                      <Tab.Panel key={category.name} className="space-y-10 px-4 pt-10 pb-8">
+                      <Tab.Panel key={category.name} className="space-y-10 px-4 pt-10 pb-15">
                         <div className="grid grid-cols-2 gap-x-4">
                           {category.featured.map((item) => (
                             <div key={item.name} className="group relative text-sm">
                               <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                                 <img src={item.imageSrc} alt={item.imageAlt} className="object-cover object-center" />
                               </div>
-                              <Link to={item.href} className="mt-6 block font-medium text-gray-900">
+                              <Link to={item.href} className="mt-2 block font-medium text-gray-900 pb-8">
                                 <span className="absolute inset-0 z-10" aria-hidden="true" />
                                 {item.name}
                               </Link>
-                              <p aria-hidden="true" className="mt-1">
-                                Shop now
-                              </p>
                             </div>
                           ))}
                         </div>
-                        {category.sections.map((section) => (
-                          <div key={section.name}>
-                            <p id={`${category.id}-${section.id}-heading-mobile`} className="font-medium text-gray-900">
-                              {section.name}
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                              className="mt-6 flex flex-col space-y-6"
-                            >
-                              {section.items.map((item) => (
-                                <li key={item.name} className="flow-root">
-                                  <Link to={item.href} className="-m-2 block p-2 text-gray-500">
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
                       </Tab.Panel>
                     ))}
                   </Tab.Panels>
                 </Tab.Group>
 
-                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <Link to={page.href} className="-m-2 block p-2 font-medium text-gray-900">
-                        {page.name}
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  <div className="flow-root">
-                    <Link to="/hola" className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
-                    </Link>
-                  </div>
-                  <div className="flow-root">
-                    <Link to="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Create account
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-200 py-6 px-4">
-                  <Link to="#" className="-m-2 flex items-center p-2">
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                    <span className="sr-only">, change currency</span>
-                  </Link>
-                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Envios Gratis a partir de $100
+      <header className="relative">
+        <p className="flex h-8 items-center justify-center bg-gray-200 px-4 text-sm font-medium text-gray-900 sm:px-6 lg:px-8">
+          Envios Gratis a partir de $ 1.000
         </p>
 
-        <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Top" className="mx-auto px-4 sm:px-6 lg:px-10 bg-[#F8DD6E]">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
               <button
                 type="button"
-                className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
+                className="rounded-md bg-[#F8DD6E] p-2 text-gray-700"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>
@@ -215,7 +137,6 @@ function NavBar() {
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
                 <Link to="/">
-                  <span className="sr-only">Happy Shop</span>
                   <img
                     className="h-16 w-auto"
                     src={logo}
@@ -231,19 +152,6 @@ function NavBar() {
                     <Popover key={category.name} className="flex">
                       {({ open }) => (
                         <>
-                          <div className="relative flex">
-                            <Popover.Button
-                              className={classNames(
-                                open
-                                  ? 'border-indigo-600 text-indigo-600'
-                                  : 'border-transparent text-gray-700 hover:text-gray-800',
-                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
-                              )}
-                            >
-                              {category.name}
-                            </Popover.Button>
-                          </div>
-
                           <Transition
                             as={Fragment}
                             enter="transition ease-out duration-200"
@@ -258,6 +166,7 @@ function NavBar() {
                               <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
                               <div className="relative bg-white">
+                                Categorias
                                 <div className="mx-auto max-w-7xl px-8">
                                   <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
@@ -274,34 +183,10 @@ function NavBar() {
                                             <span className="absolute inset-0 z-10" aria-hidden="true" />
                                             {item.name}
                                           </Link>
-                                          <p aria-hidden="true" className="mt-1">
-                                            Shop now
-                                          </p>
                                         </div>
                                       ))}
                                     </div>
-                                    <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                      {category.sections.map((section) => (
-                                        <div key={section.name}>
-                                          <p id={`${section.name}-heading`} className="font-medium text-gray-900">
-                                            {section.name}
-                                          </p>
-                                          <ul
-                                            role="list"
-                                            aria-labelledby={`${section.name}-heading`}
-                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                          >
-                                            {section.items.map((item) => (
-                                              <li key={item.name} className="flex">
-                                                <Link to={item.href} className="hover:text-gray-800">
-                                                  {item.name}
-                                                </Link>
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        </div>
-                                      ))}
-                                    </div>
+
                                   </div>
                                 </div>
                               </div>
@@ -312,36 +197,10 @@ function NavBar() {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
-                    <a
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </a>
-                  ))}
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Iniciar Sesion
-                  </Link>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Crear Cuenta
-                  </Link>
-                </div>
-
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <Link to="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                  </Link>
-                </div>
 
                 {/* Cart */}
                 <CartWidget/>

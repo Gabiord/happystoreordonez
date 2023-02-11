@@ -47,7 +47,7 @@ function ItemDetail({producto}) {
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <p className="text-3xl tracking-tight text-gray-900">$ {producto.price}</p>
               <ItemCount onAdd={onAdd}/>
-            <button onClick={handleClick} className="flex w-auto mt-10 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <button onClick={handleClick} className="flex w-auto mt-10 items-center justify-center rounded-md border border-transparent bg-black py-3 px-8 text-base font-medium text-white hover:bg-[#4b88a2] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                Agregar al carrito
             </button>
           </div>

@@ -15,7 +15,7 @@ function ItemListContainer () {
     const categoryId = category.id
    
     useEffect(()=>{
-        Loading.standard('Cargando Productos');
+        Loading.standard('Cargando', {svgColor: '#4b88a2'});
         const productsCollection = collection(db,"productos")
         const filtro = categoryId ? query(productsCollection,where("category","==",categoryId)) : productsCollection;
 

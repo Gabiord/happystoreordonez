@@ -12,7 +12,7 @@ const ItemList = (props) => {
     const categoryId = category.id;
     const titulo = categoryId ? `Categoria :  ${categoryId}` : "Categoria: Todas las Categorias."
 
-    if(isCarrito){
+    if(isCarrito==true){
         if(totalProductos==0) {
             return(
                 <div className="rounded-lg md:w-5/5">
