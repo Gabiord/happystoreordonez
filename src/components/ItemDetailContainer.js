@@ -10,7 +10,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const ItemDetailContainer = () => {
 
-    const [load, setLoad] = useState(false)
     const [producto, setProducto] = useState({});
     const { id } = useParams()
 

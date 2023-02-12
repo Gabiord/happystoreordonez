@@ -1,5 +1,3 @@
-/* This example requires Tailwind CSS v3.0+ */
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const navigation = [
@@ -10,7 +8,6 @@ const navigation = [
 ]
 
 export default function LandingPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <main className="relative px-6 lg:px-8 mainLanding">
