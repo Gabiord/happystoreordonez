@@ -10,7 +10,6 @@ function ItemDetail({producto}) {
 
   const {agregarProductoAlCarrito}= useCart()
   const [cantidadContador, setCantidadContador]=useState(1)
-  const isCart=false
 
   const { id } = useParams()
 

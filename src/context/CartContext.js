@@ -52,7 +52,7 @@ const CartContext = ({children}) => {
     }
 
     const eliminarProductoDelCarrito = (id) =>{
-        const copia = cart.filter(producto => producto.id != id );
+        const copia = cart.filter(producto => producto.id !== id );
         setCart(copia)
         actualizarCartWidget(copia,0);
 

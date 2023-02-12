@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import ItemDetailContainer from "./ItemDetailContainer";
 import Carrito from "./Carrito";
 import LandingPage from "./LandingPage"
+import TrackingPage from "./TrackingPage";
 
 
 function Main(){
@@ -14,6 +15,7 @@ function Main(){
                 <Route path="products/category/:id" element={<ItemListContainer/>}/>
                 <Route path="/item/:id" element={<ItemDetailContainer/>}/>
                 <Route path="/carrito" element={<Carrito/>}/>
+                <Route path="/tracking/:id" element={<TrackingPage/>}/>
             </Routes>
         </main>
     )

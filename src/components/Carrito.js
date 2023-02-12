@@ -4,11 +4,12 @@ import { useCart } from '../context/CartContext';
 import ItemList from './ItemList';
 import { db } from '../firebase';
 import { Report } from 'notiflix';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Carrito = () => {
 
     const { cart, setCart } = useCart()
-    const isCarrito= true
     const subtotal=cart.map(item => item.total).reduce((prev,curr)=> prev+curr,0);
     const envio = subtotal> 1000? 0: 300;
     const impuesto = 0.22*(subtotal+envio);
@@ -21,8 +22,10 @@ const Carrito = () => {
     const [ciudad, setCiudad]=useState("")
     const [departamento, setDepartamento]=useState("")
     const [zip,setZip]=useState(0)
+    const [isCarrito, setIsCarrito]= useState(true)
 
-    const handleChangeName = (evt) => {setNombreyApellido(evt.target.value)}
+
+    const handleChangeName = (evt) => {console.log(evt.target.value)}
     const handleChangeTelefono = (evt) =>{ setTelefono(evt.target.value)}
     const handleChangeEmail = (evt) =>{setEmail(evt.target.value)}
     const handleChangeDireccion = (evt) => {setDireccion(evt.target.value)}
@@ -30,37 +33,50 @@ const Carrito = () => {
     const handleChangeDepartamento = (evt) =>{setDepartamento(evt.target.value)}
     const handleChangeZip = (evt) => {setZip(evt.target.value)}
 
+    const navigate = useNavigate();
 
-    const handleClickConfirmarCompra = (evt) =>{
-        evt.preventDefault();
-        const compra = {
-            usuario: {
-                      nombreyApellido,
-                      telefono,
-                      email,
-                      direccion,
-                      ciudad,
-                      departamento,
-                      zip,
-                      total
-                      },
-                    
+    const handleclick = (prop) =>{ 
+      navigate(`/tracking/${prop}`)
+     }
+
+    async function handleClickConfirmarCompra (evt){
+        if(subtotal>0){
+          evt.preventDefault();
+          const compra = {
+            fecha: serverTimestamp(),
             carrito: {cart},
-            fecha: serverTimestamp()
-        }  
-        const ventasColletion = collection(db,"ventas")
-        const pedido = addDoc(ventasColletion,compra)   
-        pedido
-        .then((respuesta)=>{
-          Report.success("Gracias por tu compra!", `El ticket de segumiento de la compra es el siguiente: <br/> ${respuesta.id}`, "OKAY");
-        })
-        .catch(error=>{
-          Report.failure("No se pudo completar tu compra", `Por favor intentalo de nuevo`, "OKAY");
-        })
-        evt.target.reset()
-        setCart([])
+            nombreyApellido,
+            telefono,
+            email,
+            direccion,
+            ciudad,
+            departamento,
+            zip,    
+            subtotal,
+            envio,
+            impuesto,
+            total
+          }  
+          const ventasColletion = collection(db,"ventas")
+          const pedido = addDoc(ventasColletion,compra)   
+          await pedido
+          .then((respuesta)=>{
+            Report.success("Gracias por tu compra!", `El ticket de segumiento de la compra es el siguiente: <br/> ${respuesta.id}`, `OKAY` , handleclick() );
+            handleclick(respuesta.id)
+            evt.target.reset()
+            setCart([])
+          })
+          .catch(error=>{
+            Report.failure("No se pudo completar tu compra", `Por favor intentalo de nuevo`, "OKAY");
+          })
+      }
+      else{
+        evt.preventDefault()
+        Report.failure("El carrito esta vacio", "");
+      }
     }
 
+    if(isCarrito){
       return (
         <article className="bg-white pt-20">
             <h1 className="mb-9 text-center text-2xl font-bold">Carrito</h1>
@@ -83,7 +99,7 @@ const Carrito = () => {
                       </div>
                       <div className="mt-2">
                         <label className=" block text-sm text-gray-600" for="cus_email">Direccion de Entrega</label>
-                        <input onChange={handleChangeDireccion} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Calle y No de Puerta"/>
+                        <input onSubmit={handleChangeDireccion} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Calle y No de Puerta"/>
                       </div>
                       <div className="mt-2">
                         <label className="hidden text-sm block text-gray-600" for="cus_email">Ciudad</label>
@@ -95,7 +111,7 @@ const Carrito = () => {
                       </div>
                       <div className="inline-block mt-2 -mx-1 pl-1 w-1/2">
                         <label className="hidden block text-sm text-gray-600" for="cus_email">Zip</label>
-                        <input onChange={handleChangeZip} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email"  name="cus_email" type="text" required placeholder="Zip"/>
+                        <input onSubmit={handleChangeZip} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email"  name="cus_email" type="text" required placeholder="Zip"/>
                       </div>
                       <p className="mt-6 text-gray-800 font-medium">Informacion de Pago</p>
                       <div className="mt-2">
@@ -115,7 +131,6 @@ const Carrito = () => {
                         <input className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="number" name="cus_email" type="number" required placeholder="CVC" />
                       </div>
                     
-
                     <div className="mb-2 flex justify-between">
                       <p className="text-gray-700">Subtotal</p>
                       <p className="text-gray-700">$ {subtotal}</p>
@@ -135,12 +150,14 @@ const Carrito = () => {
                         <p className="text-lg font-bold">$ {total}</p>
                       </div>
                     </div>
+                   
                     <button type="submit" className="mt-6 w-full rounded-md bg-black py-1.5 font-medium text-blue-50 hover:bg-[#F8DD6E] hover:text-black">Terminar Compra</button>
                     </form>
                 </div>
             </div>  
         </article>
       )
+    }
 }
 
 export default Carrito;
