@@ -10,6 +10,7 @@ import { Loading } from "notiflix";
 function ItemListContainer () {
     const [load, setLoad] = useState(false);
     const [productos, setProductos]=useState([]);
+    const lista = "itemListContainer"
 
     const category =  useParams()
     const categoryId = category.id
@@ -36,7 +37,7 @@ function ItemListContainer () {
    
     return (
         <div>
-            <ItemList productos={productos}/>
+            <ItemList productos={productos} lista={lista}/>
         </div>
     )
 }

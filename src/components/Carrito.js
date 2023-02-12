@@ -9,11 +9,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Carrito = () => {
 
+    const lista = "carrito"
     const { cart, setCart } = useCart()
     const subtotal=cart.map(item => item.total).reduce((prev,curr)=> prev+curr,0);
     const envio = subtotal> 1000? 0: 300;
     const impuesto = 0.22*(subtotal+envio);
     const total = subtotal+envio+impuesto;
+
 
     const [nombreyApellido, setNombreyApellido]=useState("")
     const [telefono, setTelefono]=useState(0)
@@ -22,10 +24,9 @@ const Carrito = () => {
     const [ciudad, setCiudad]=useState("")
     const [departamento, setDepartamento]=useState("")
     const [zip,setZip]=useState(0)
-    const [isCarrito, setIsCarrito]= useState(true)
 
 
-    const handleChangeName = (evt) => {console.log(evt.target.value)}
+    const handleChangeName = (evt) => {setNombreyApellido(evt.target.value)}
     const handleChangeTelefono = (evt) =>{ setTelefono(evt.target.value)}
     const handleChangeEmail = (evt) =>{setEmail(evt.target.value)}
     const handleChangeDireccion = (evt) => {setDireccion(evt.target.value)}
@@ -44,7 +45,7 @@ const Carrito = () => {
           evt.preventDefault();
           const compra = {
             fecha: serverTimestamp(),
-            carrito: {cart},
+            cart,
             nombreyApellido,
             telefono,
             email,
@@ -76,12 +77,11 @@ const Carrito = () => {
       }
     }
 
-    if(isCarrito){
       return (
         <article className="bg-white pt-20">
             <h1 className="mb-9 text-center text-2xl font-bold">Carrito</h1>
             <div class="mx-auto max-w-7xl md:flex md:space-x-3 xl:px-0">
-                <ItemList className="mt-1 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/5" isCarrito={isCarrito}/>
+                <ItemList className="mt-1 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/5" lista={lista}  />
                 <div className="mt-1 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-4/5">
                   <form className="justify-between mb-6 rounded-lg bg-white p-3 sm:justify-start" onSubmit={handleClickConfirmarCompra}>
                       <p className="text-gray-800 font-medium">Información para el envio</p>
@@ -157,7 +157,6 @@ const Carrito = () => {
             </div>  
         </article>
       )
-    }
-}
+  }
 
 export default Carrito;

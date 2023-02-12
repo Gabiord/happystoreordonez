@@ -4,12 +4,14 @@ import { useParams } from 'react-router-dom'
 import { collection, doc, getDoc, serverTimestamp} from "firebase/firestore";
 import { db } from "../firebase"
 import { useState } from 'react';
+import ItemList from './ItemList';
 
 
 const SeguimientoCompra = () => {
 
   const { id } = useParams()
   const [compra, setCompra]=useState({})
+  const lista = "trackingPage"
 
   useEffect(()=>{
     Loading.standard('Cargando', {svgColor: '#4b88a2'});
@@ -22,21 +24,19 @@ const SeguimientoCompra = () => {
         Loading.remove();
         const data=respuesta.data()
         setCompra(data)
-        
     })
     .catch((error)=> {
         console.log(error)
-    })
-
+    }) 
 }, [])
+
 
   return (
 <div class="flex justify-center items-center h-screen bg-gray-200 text-gray-900">
   <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
     <div class="py-2">
-      <div class="text-center text-xl font-bold">ORDEN</div>
-      <div class="text-center text-xl font-bold">Detalles de la orden</div>
-      <div class="text-center text-xs font-bold"># {id}</div>
+      <div class="text-center text-xl font-bold">Ticket de compra</div>
+      <div class="text-center text-xl font-bold">Detalles</div>
     </div>
     <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
     <div class="text-xs pl-2">
@@ -51,21 +51,7 @@ const SeguimientoCompra = () => {
         <span class="w-2/6 text-right">Cantidad</span>
       </div>
       <div class="border-dashed border-t border-b border-l-0 border-r-0 border-gray-900 mt-1 my-2 py-2 px-1">
-        <div class="flex justify-between text-sm">
-          <span class="w-2/6 truncate">Gym suit</span>
-          <span class="w-2/6 text-right">$9998</span>
-          <span class="w-2/6 text-right">1</span>
-        </div>
-        <div class="flex justify-between text-sm">
-          <span class="w-2/6 truncate">Boxing glove</span>
-          <span class="w-2/6 text-right">$9998</span>
-          <span class="w-2/6 text-right">1</span>
-        </div>
-        <div class="flex justify-between text-sm">
-          <span class="w-2/6 truncate">Purified water</span>
-          <span class="w-2/6 text-right">$2</span>
-          <span class="w-2/6 text-right">4</span>
-        </div>
+        {/* <ItemList compra={compra.cart} lista={lista}/> */}
       </div>
     </div>
     <div class="text-xs">

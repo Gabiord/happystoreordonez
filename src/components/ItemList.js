@@ -1,18 +1,18 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Item from "./Item"
 import { useCart } from "../context/CartContext"
 import ProductInCart from './ProductInCart';
 
 const ItemList = (props) => {
-    const { isCarrito, productos } = props
-    const { cart, totalProductos} = useCart()
-    console.log(totalProductos)
-    const category =  useParams();
-    const categoryId = category.id;
-    const titulo = categoryId ? `Categoria :  ${categoryId}` : "Categoria: Todas las Categorias."
 
-    if(isCarrito==true){
+    const { lista, productos, compra } = props
+    const { cart, totalProductos} = useCart()
+    const category =  useParams();
+
+  switch(lista){
+
+    case "carrito":
         if(totalProductos==0) {
             return(
                 <div className="rounded-lg md:w-5/5">
@@ -47,13 +47,14 @@ const ItemList = (props) => {
                 </div>
             )
   
-    }
 
+    case "itemListContainer":
+    const categoryId = category.id;
+    const titulo = categoryId ? `Categoria :  ${categoryId}` : "Categoria: Todas las Categorias."
     return (
     <div className="bg-white">
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">{titulo}</h2>
-        
             <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
               {productos.map((producto) => {
                     return (
@@ -61,10 +62,31 @@ const ItemList = (props) => {
                     )
                 })}
             </div>
-            
         </div>
     </div>    
-    )}
+    )
+
+
+
+    case "trackingPage":
+      console.log(compra)
+      return(
+       <div className="border-dashed border-t border-b border-l-0 border-r-0 border-gray-900 mt-1 my-2 py-2 px-1">
+        {compra.map ((producto)=>{
+          return(
+            <div className="flex justify-between text-sm">
+              <span className="w-2/6 truncate">{producto.title}</span>
+              <span className="w-2/6 text-right">${producto.total}</span>
+              <span className="w-2/6 text-right">{producto.quantity}</span>
+            </div>
+          )
+        })}
+      </div>  
+      )
+  }
+
+}
+
 
 
 export default ItemList;
