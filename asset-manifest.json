@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "/happystoreordonez/static/css/main.a1e87171.css",
-    "main.js": "/happystoreordonez/static/js/main.b8e9fb1d.js",
-    "static/media/logo512.png": "/happystoreordonez/static/media/logo512.47f5abf1efe789bd8be2.png",
+    "main.css": "/happystoreordonez/static/css/main.cb1518e4.css",
+    "main.js": "/happystoreordonez/static/js/main.8f94d061.js",
+    "static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.jpg": "/happystoreordonez/static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.e5418e04146b17da7ed9.jpg",
+    "static/media/logo512.png": "/happystoreordonez/static/media/logo512.21ba9e9b68b5bf57c7e8.png",
     "index.html": "/happystoreordonez/index.html",
-    "main.a1e87171.css.map": "/happystoreordonez/static/css/main.a1e87171.css.map",
-    "main.b8e9fb1d.js.map": "/happystoreordonez/static/js/main.b8e9fb1d.js.map"
+    "main.cb1518e4.css.map": "/happystoreordonez/static/css/main.cb1518e4.css.map",
+    "main.8f94d061.js.map": "/happystoreordonez/static/js/main.8f94d061.js.map"
   },
   "entrypoints": [
-    "static/css/main.a1e87171.css",
-    "static/js/main.b8e9fb1d.js"
+    "static/css/main.cb1518e4.css",
+    "static/js/main.8f94d061.js"
   ]
 }
