@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 
 
 
-function ItemDetail({producto}) {
+function ItemDetail({ producto }) {
 
-  const {agregarProductoAlCarrito}= useCart()
-  const [cantidadContador, setCantidadContador]=useState(1)
+  const { agregarProductoAlCarrito } = useCart()
+  const [cantidadContador, setCantidadContador] = useState(1)
 
   const { id } = useParams()
 
@@ -18,9 +18,9 @@ function ItemDetail({producto}) {
   }
 
   const handleClick = () => {
-    agregarProductoAlCarrito({producto},cantidadContador,id)
+    agregarProductoAlCarrito({ producto }, cantidadContador, id)
   }
-  
+
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -41,13 +41,13 @@ function ItemDetail({producto}) {
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{producto.title}</h1>
           </div>
-        
+
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <p className="text-3xl tracking-tight text-gray-900">$ {producto.price}</p>
-              <ItemCount onAdd={onAdd}/>
+            <ItemCount onAdd={onAdd} />
             <button onClick={handleClick} className="flex w-auto mt-10 items-center justify-center rounded-md border border-transparent bg-black py-3 px-8 text-base font-medium text-white hover:bg-[#4b88a2] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-               Agregar al carrito
+              Agregar al carrito
             </button>
           </div>
 

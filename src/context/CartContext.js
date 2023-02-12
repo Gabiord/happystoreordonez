@@ -11,71 +11,72 @@ export const useCart = () => {
     return valor
 }
 
-const CartContext = ({children}) => {
-    const inicioSt = localStorage.length>0 ? (JSON.parse(localStorage.getItem("carrito"))):[];    
-    const [cart, setCart]=useState(inicioSt);
+const CartContext = ({ children }) => {
+    const inicioSt = localStorage.length > 0 ? (JSON.parse(localStorage.getItem("carrito"))) : [];
+    const [cart, setCart] = useState(inicioSt);
     localStorage.setItem("carrito", JSON.stringify(cart))
 
-    const inicioTP= cart.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0)
-    const [totalProductos, setTotalProductos]=useState(inicioTP)
+    const inicioTP = cart.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0)
+    const [totalProductos, setTotalProductos] = useState(inicioTP)
 
-    const actualizarCartWidget = (array,suma) =>{
-        const cantidad=array.map(item => item.quantity).reduce((prev,curr)=> prev+curr,0);
-        setTotalProductos (cantidad+suma)
+    const actualizarCartWidget = (array, suma) => {
+        const cantidad = array.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+        setTotalProductos(cantidad + suma)
     }
 
-    const agregarProductoAlCarrito = ({producto},cantidadContador,id) => {
+    const agregarProductoAlCarrito = ({ producto }, cantidadContador, id) => {
 
-        actualizarCartWidget(cart,cantidadContador);
+        actualizarCartWidget(cart, cantidadContador);
 
-        if(cart.some(product => product.id === id)){
+        if (cart.some(product => product.id === id)) {
             const index = cart.findIndex(product => product.id === id)
-            cart[index].quantity+=cantidadContador
-            cart[index].total=cart[index].price*cart[index].quantity
+            cart[index].quantity += cantidadContador
+            cart[index].total = cart[index].price * cart[index].quantity
         }
 
-        else{
-            const productToCart={id:id,
-                                title: producto.title,
-                                price: producto.price,
-                                image: producto.image,
-                                quantity: cantidadContador,
-                                total: producto.price*cantidadContador,
-                                }
+        else {
+            const productToCart = {
+                id: id,
+                title: producto.title,
+                price: producto.price,
+                image: producto.image,
+                quantity: cantidadContador,
+                total: producto.price * cantidadContador,
+            }
 
             const copia = cart.slice(0)
             copia.push(productToCart)
             setCart(copia)
-            }
-        Notify.success('Se agrego un item al Carrito');    
+        }
+        Notify.success('Se agrego un item al Carrito');
     }
 
-    const eliminarProductoDelCarrito = (id) =>{
-        const copia = cart.filter(producto => producto.id !== id );
+    const eliminarProductoDelCarrito = (id) => {
+        const copia = cart.filter(producto => producto.id !== id);
         setCart(copia)
-        actualizarCartWidget(copia,0);
+        actualizarCartWidget(copia, 0);
 
     }
 
-    const actualizarItemDelCarrito= (id, valor) =>{
+    const actualizarItemDelCarrito = (id, valor) => {
         const index = cart.findIndex(product => product.id === id)
-        cart[index].quantity=valor;
-        cart[index].total=cart[index].price*cart[index].quantity
-        actualizarCartWidget(cart,0);
+        cart[index].quantity = valor;
+        cart[index].total = cart[index].price * cart[index].quantity
+        actualizarCartWidget(cart, 0);
     }
-    
+
 
     const valorDelContexto = {
-        cart:cart,
+        cart: cart,
         totalProductos: totalProductos,
         setCart: setCart,
         setTotalProductos: setTotalProductos,
         agregarProductoAlCarrito: agregarProductoAlCarrito,
         eliminarProductoDelCarrito: eliminarProductoDelCarrito,
-        actualizarItemDelCarrito : actualizarItemDelCarrito
+        actualizarItemDelCarrito: actualizarItemDelCarrito
     }
 
-    return(
+    return (
         <Provider value={valorDelContexto}>
             {children}
         </Provider>

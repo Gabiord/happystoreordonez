@@ -6,16 +6,16 @@ import LandingPage from "./LandingPage"
 import TrackingPage from "./TrackingPage";
 
 
-function Main(){
-    return(
+function Main() {
+    return (
         <main>
             <Routes>
-                <Route path="/" element={<LandingPage/>}/>
-                <Route path="/products" element={<ItemListContainer/>}/>
-                <Route path="products/category/:id" element={<ItemListContainer/>}/>
-                <Route path="/item/:id" element={<ItemDetailContainer/>}/>
-                <Route path="/carrito" element={<Carrito/>}/>
-                <Route path="/tracking/:id" element={<TrackingPage/>}/>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/products" element={<ItemListContainer />} />
+                <Route path="products/category/:id" element={<ItemListContainer />} />
+                <Route path="/item/:id" element={<ItemDetailContainer />} />
+                <Route path="/carrito" element={<Carrito />} />
+                <Route path="/tracking/:id" element={<TrackingPage />} />
             </Routes>
         </main>
     )

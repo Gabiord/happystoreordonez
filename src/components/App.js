@@ -8,12 +8,11 @@ function App() {
   return (
     <CartContext>
       <BrowserRouter>
-        <NavBar/>
-        <Main/>
+        <NavBar />
+        <Main />
       </BrowserRouter>
     </CartContext>
   );
 }
 
 export default App;
- 

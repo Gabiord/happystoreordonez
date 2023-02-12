@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from "../images/logo512.png"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import CartWidget from './CartWidget'
 
 const navigation = {
@@ -203,7 +203,7 @@ function NavBar() {
               <div className="ml-auto flex items-center">
 
                 {/* Cart */}
-                <CartWidget/>
+                <CartWidget />
               </div>
             </div>
           </div>
