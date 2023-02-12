@@ -10,7 +10,7 @@ function Main() {
     return (
         <main>
             <Routes>
-                <Route path="/" element={<LandingPage />} />
+                <Route path="/happystoreordonez" element={<LandingPage />} />
                 <Route path="/products" element={<ItemListContainer />} />
                 <Route path="products/category/:id" element={<ItemListContainer />} />
                 <Route path="/item/:id" element={<ItemDetailContainer />} />
