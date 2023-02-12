@@ -27,20 +27,19 @@ const Carrito = () => {
 
 
     const handleChangeName = (evt) => {setNombreyApellido(evt.target.value)}
-    const handleChangeTelefono = (evt) =>{ setTelefono(evt.target.value)}
+    const handleChangeTelefono = (evt) =>{setTelefono(evt.target.value)}
     const handleChangeEmail = (evt) =>{setEmail(evt.target.value)}
     const handleChangeDireccion = (evt) => {setDireccion(evt.target.value)}
     const handleChangeCiudad = (evt) =>{setCiudad(evt.target.value)}
     const handleChangeDepartamento = (evt) =>{setDepartamento(evt.target.value)}
     const handleChangeZip = (evt) => {setZip(evt.target.value)}
-
     const navigate = useNavigate();
 
-    const handleclick = (prop) =>{ 
+    const handleclick = (prop) => { 
       navigate(`/tracking/${prop}`)
      }
 
-    async function handleClickConfirmarCompra (evt){
+    const handleClickConfirmarCompra = (evt) => {
         if(subtotal>0){
           evt.preventDefault();
           const compra = {
@@ -60,12 +59,12 @@ const Carrito = () => {
           }  
           const ventasColletion = collection(db,"ventas")
           const pedido = addDoc(ventasColletion,compra)   
-          await pedido
+          pedido
           .then((respuesta)=>{
             Report.success("Gracias por tu compra!", `El ticket de segumiento de la compra es el siguiente: <br/> ${respuesta.id}`, `OKAY` , handleclick() );
-            handleclick(respuesta.id)
             evt.target.reset()
             setCart([])
+            handleclick(respuesta.id)
           })
           .catch(error=>{
             Report.failure("No se pudo completar tu compra", `Por favor intentalo de nuevo`, "OKAY");
@@ -87,31 +86,31 @@ const Carrito = () => {
                       <p className="text-gray-800 font-medium">Información para el envio</p>
                       <div className="mt-2">
                         <label className="block text-sm text-gray-00" for="cus_name">Nombre y Apellido</label>
-                        <input onChange={handleChangeName} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="text" required placeholder="Juan Perez"/>
+                        <input onBlur={handleChangeName} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="text" required placeholder="Juan Perez"/>
                       </div>
                       <div className="mt-2">
                         <label className="block text-sm text-gray-00" for="cus_name">Telefono</label>
-                        <input onChange={handleChangeTelefono} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="tel" required placeholder="555555"/>
+                        <input onBlur={handleChangeTelefono} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="tel" required placeholder="555555"/>
                       </div>
                       <div className="mt-2">
-                        <label onChange={handleChangeEmail} className="block text-sm text-gray-600" for="cus_email">Email</label>
+                        <label onBlur={handleChangeEmail} className="block text-sm text-gray-600" for="cus_email">Email</label>
                         <input className="w-full px-5  py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="ejemplo@ejemplo.com"/>
                       </div>
                       <div className="mt-2">
                         <label className=" block text-sm text-gray-600" for="cus_email">Direccion de Entrega</label>
-                        <input onSubmit={handleChangeDireccion} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Calle y No de Puerta"/>
+                        <input onBlur={handleChangeDireccion} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Calle y No de Puerta"/>
                       </div>
                       <div className="mt-2">
                         <label className="hidden text-sm block text-gray-600" for="cus_email">Ciudad</label>
-                        <input onChange={handleChangeCiudad} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Ciudad"/>
+                        <input onBlur={handleChangeCiudad} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Ciudad"/>
                       </div>
                       <div className="inline-block mt-2 w-1/2 pr-1">
                         <label className="hidden block text-sm text-gray-600" for="cus_email">Departamento</label>
-                        <input onChange={handleChangeDepartamento} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Departamento"/>
+                        <input onBlur={handleChangeDepartamento} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Departamento"/>
                       </div>
                       <div className="inline-block mt-2 -mx-1 pl-1 w-1/2">
                         <label className="hidden block text-sm text-gray-600" for="cus_email">Zip</label>
-                        <input onSubmit={handleChangeZip} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email"  name="cus_email" type="text" required placeholder="Zip"/>
+                        <input onBlur={handleChangeZip} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email"  name="cus_email" type="text" required placeholder="Zip"/>
                       </div>
                       <p className="mt-6 text-gray-800 font-medium">Informacion de Pago</p>
                       <div className="mt-2">

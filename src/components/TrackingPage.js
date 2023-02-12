@@ -1,13 +1,13 @@
 import { Loading } from 'notiflix'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { collection, doc, getDoc, serverTimestamp} from "firebase/firestore";
+import { collection, doc, getDoc} from "firebase/firestore";
 import { db } from "../firebase"
 import { useState } from 'react';
 import ItemList from './ItemList';
 
 
-const SeguimientoCompra = () => {
+const TrackingPage = () => {
 
   const { id } = useParams()
   const [compra, setCompra]=useState({})
@@ -30,7 +30,6 @@ const SeguimientoCompra = () => {
     }) 
 }, [])
 
-
   return (
 <div class="flex justify-center items-center h-screen bg-gray-200 text-gray-900">
   <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
@@ -40,7 +39,7 @@ const SeguimientoCompra = () => {
     </div>
     <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
     <div class="text-xs pl-2">
-      <div class="text-xs mb-1">Cliente：{compra.nombreyapellido}</div>
+      <div class="text-xs mb-1">Cliente：{compra.nombreyApellido}</div>
       <div class="text-xs mb-1">Telefono：{compra.telefono}</div>
       <div>ID de Orden：{id}</div>
     </div>
@@ -51,6 +50,16 @@ const SeguimientoCompra = () => {
         <span class="w-2/6 text-right">Cantidad</span>
       </div>
       <div class="border-dashed border-t border-b border-l-0 border-r-0 border-gray-900 mt-1 my-2 py-2 px-1">
+      <div className="flex justify-between text-sm">
+              <span className="w-2/6 truncate">Short Niña - Phoebe Pink</span>
+              <span className="w-2/6 text-right">750</span>
+              <span className="w-2/6 text-right">1</span>
+      </div>
+      <div className="flex justify-between text-sm">
+              <span className="w-2/6 truncate">Remera Gráfico Flippy Niña - Soft Jade</span>
+              <span className="w-2/6 text-right">1600</span>
+              <span className="w-2/6 text-right">2</span>
+      </div>
         {/* <ItemList compra={compra.cart} lista={lista}/> */}
       </div>
     </div>
@@ -68,4 +77,5 @@ const SeguimientoCompra = () => {
   )
 }
 
-export default SeguimientoCompra
+
+export default TrackingPage;

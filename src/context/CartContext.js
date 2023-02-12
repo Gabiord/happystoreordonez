@@ -46,7 +46,6 @@ const CartContext = ({children}) => {
             const copia = cart.slice(0)
             copia.push(productToCart)
             setCart(copia)
-            console.log (cart)
             }
         Notify.success('Se agrego un item al Carrito');    
     }

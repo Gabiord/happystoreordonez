@@ -65,9 +65,7 @@ const ItemList = (props) => {
         </div>
     </div>    
     )
-
-
-
+    
     case "trackingPage":
       console.log(compra)
       return(
