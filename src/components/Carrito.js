@@ -58,8 +58,8 @@ const Carrito = () => {
         total
       }
       const ventasColletion = collection(db, "ventas")
-      const envio = addDoc(ventasColletion, compra)
-      envio
+      const pedido = addDoc(ventasColletion, compra)
+      pedido
         .then((respuesta) => {
           Report.success("Gracias por tu compra!", `El ticket de segumiento de la compra es el siguiente: <br/> ${respuesta.id}`, `OKAY`, handleclick());
           evt.target.reset()
