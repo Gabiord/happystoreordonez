@@ -7,6 +7,8 @@ import { Report } from 'notiflix';
 import { useNavigate } from 'react-router-dom';
 
 
+
+
 const Carrito = () => {
 
   const lista = "carrito"

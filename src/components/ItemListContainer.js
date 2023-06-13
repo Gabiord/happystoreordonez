@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 import { Notify } from "notiflix";
 import { Loading } from "notiflix";
+import axios from "axios";
 
 
 function ItemListContainer() {
@@ -12,17 +13,11 @@ function ItemListContainer() {
 
     useEffect(() => {
         Loading.standard('Cargando', { svgColor: '#4b88a2' });
-        fetch("http://localhost:8080/api/products/",{
-            method: 'GET',
-            headers:{
-                'Content-type':'application/json'
-            }
-        }).then(result => {
-                result.json().then(json=>{
-                    const products = json.payload
-                    setProductos(products)
-                    Loading.remove()
-                })
+        axios.get("http://localhost:8080/api/products/")
+            .then(result => {
+                const products = result.data.payload
+                setProductos(products)
+                Loading.remove()
             })
             .catch((error)=>{
                 console.error(error)

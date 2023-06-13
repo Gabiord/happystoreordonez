@@ -20,6 +20,8 @@ const ProductInCart = ({ product }) => {
     eliminarProductoDelCarrito(product.id)
   }
 
+  console.log(product)
+
   return (
     <>
       <div class="md:flex items-strech py-1 md:py-5 lg:py-1 border-gray-100 border-t-2">
@@ -28,8 +30,8 @@ const ProductInCart = ({ product }) => {
         </div>
         <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
           <div class="flex items-center justify-between w-full pt-1">
-            <p class="text-base leading-none text-gray-800 dark:text-white">{product.title}</p>
-            <p class="text-base leading-none text-gray-800 dark:text-white">$ {product.price}</p>
+            <p class="text-base leading-none text-gray-800 dark:text-black">{product.title}</p>
+            <p class="text-base leading-none text-gray-800 dark:text-black">$ {product.price}</p>
 
           </div>
           <div class="flex items-center justify-between pt-5">

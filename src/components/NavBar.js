@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from "../images/logo512.png"
 import { Link } from "react-router-dom"
 import CartWidget from './CartWidget'
+import SessionWidget from './SessionWidget'
 
 const navigation = {
   categories: [
@@ -45,6 +46,8 @@ function classNames(...classes) {
 }
 
 function NavBar() {
+
+  
   const [open, setOpen] = useState(false)
 
   return (
@@ -199,8 +202,9 @@ function NavBar() {
 
                 </div>
               </Popover.Group>
-
+                                        
               <div className="ml-auto flex items-center">
+                <SessionWidget/>
 
                 {/* Cart */}
                 <CartWidget />

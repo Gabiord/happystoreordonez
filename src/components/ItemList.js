@@ -37,6 +37,7 @@ const ItemList = (props) => {
           </div>
         )
       }
+      console.log(cart)
       return (
         <div className="rounded-lg md:w-5/5">
           {cart.map((product) => {

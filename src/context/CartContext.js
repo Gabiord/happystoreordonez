@@ -37,11 +37,11 @@ const CartContext = ({ children }) => {
         else {
             const productToCart = {
                 id: id,
-                title: producto.title,
-                price: producto.price,
-                image: producto.image,
+                title: producto.product_name,
+                price: producto.product_price,
+                image: producto.product_thumbnail,
                 quantity: cantidadContador,
-                total: producto.price * cantidadContador,
+                total: producto.product_thumbnail * cantidadContador,
             }
 
             const copia = cart.slice(0)

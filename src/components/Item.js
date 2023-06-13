@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const Item = ({ producto }) => {
     return (
         <article key={producto.id}>
-            <Link to={"/item/" + producto.id}>
+            <Link to={"/products/" + producto.id}>
                 <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
                     <img
                         src={producto.product_thumbnail}
