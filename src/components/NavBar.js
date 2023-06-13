@@ -139,7 +139,7 @@ function NavBar() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <Link to="/happystoreordonez">
+                <Link to="/">
                   <img
                     className="h-16 w-auto"
                     src={logo}
