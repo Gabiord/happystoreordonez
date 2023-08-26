@@ -1,77 +1,95 @@
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import React, { useState } from 'react'
 import { useCart } from '../context/CartContext';
 import ItemList from './ItemList';
-import { db } from '../firebase';
 import { Report } from 'notiflix';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getToken } from "./utils";
 
 
+const apiURL = "https://fullstackcoderhouse-production.up.railway.app/api/sessions/current"
+
+const token = getToken()
 
 
 const Carrito = () => {
 
   const lista = "carrito"
   const { cart, setCart } = useCart()
+
   const subtotal = cart.map(item => item.total).reduce((prev, curr) => prev + curr, 0);
   const envio = subtotal > 1000 ? 0 : 300;
   const impuesto = 0.22 * (subtotal + envio);
   const total = subtotal + envio + impuesto;
 
-
-  const [nombreyApellido, setNombreyApellido] = useState("")
-  const [telefono, setTelefono] = useState(0)
-  const [email, setEmail] = useState("")
-  const [direccion, setDireccion] = useState("")
-  const [ciudad, setCiudad] = useState("")
-  const [departamento, setDepartamento] = useState("")
-  const [zip, setZip] = useState(0)
-
-
-  const handleChangeName = (evt) => { setNombreyApellido(evt.target.value) }
-  const handleChangeTelefono = (evt) => { setTelefono(evt.target.value) }
-  const handleChangeEmail = (evt) => { setEmail(evt.target.value) }
-  const handleChangeDireccion = (evt) => { setDireccion(evt.target.value) }
-  const handleChangeCiudad = (evt) => { setCiudad(evt.target.value) }
-  const handleChangeDepartamento = (evt) => { setDepartamento(evt.target.value) }
-  const handleChangeZip = (evt) => { setZip(evt.target.value) }
   const navigate = useNavigate();
 
   const handleclick = (prop) => {
     navigate(`/tracking/${prop}`)
   }
 
+  const [user, setUser] = useState(null)
+  const [cargandoUusario, setCargandoUsuario] = useState(true);
+
+  useEffect(()=>{
+    async function cargarUsuario(){
+      if(!token){
+        setCargandoUsuario(false);
+        console.log("NO TENGO TOKEN")
+        return;
+      }
+      try {
+        console.log("TENGO TOKEN")
+        const usuario = await axios.get(apiURL, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setUser(usuario.data)
+        setCargandoUsuario(false)
+
+      } catch (error) {
+        console.error(error.response.data)
+      }
+    }
+    cargarUsuario();
+
+  }, [])
+
+  
+
   const handleClickConfirmarCompra = (evt) => {
     if (subtotal > 0) {
       evt.preventDefault();
-      const compra = {
-        fecha: serverTimestamp(),
-        cart,
-        nombreyApellido,
-        telefono,
-        email,
-        direccion,
-        ciudad,
-        departamento,
-        zip,
-        subtotal,
-        envio,
-        impuesto,
-        total
-      }
-      const ventasColletion = collection(db, "ventas")
-      const pedido = addDoc(ventasColletion, compra)
-      pedido
-        .then((respuesta) => {
-          Report.success("Gracias por tu compra!", `El ticket de segumiento de la compra es el siguiente: <br/> ${respuesta.id}`, `OKAY`, handleclick());
-          evt.target.reset()
-          setCart([])
-          handleclick(respuesta.id)
-        })
-        .catch(error => {
-          Report.failure("No se pudo completar tu compra", `Por favor intentalo de nuevo`, "OKAY");
-        })
+
+      const code = Date.now()
+      const purchase_datetime = new Date(Date.now()).toLocaleString();
+      const purchaser = user.email
+      const apiPurchase = `http://localhost:8080/api/carts/${user.cart_user_id}/purchase`
+
+      console.log(token)
+
+    axios({
+        method: 'post',
+        url: apiPurchase,
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        data: {
+          code,
+          purchase_datetime,
+          purchaser,
+          cart}
+      }).then(result => {
+        console.log(result.data)
+      });   
+      
+    setCart([])
+    Report.success("Compra finalizada", "Se ha enviado por mail toda la informacion")
     }
+
+   
+
     else {
       evt.preventDefault()
       Report.failure("El carrito esta vacio", "");
@@ -82,55 +100,14 @@ const Carrito = () => {
     <article className="bg-white pt-20">
       <h1 className="mb-9 text-center text-2xl font-bold">Carrito</h1>
       <div class="mx-auto max-w-7xl md:flex md:space-x-3 xl:px-0">
-        <ItemList className="mt-1 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/5" lista={lista} />
+        <ItemList className="mt-1 h-full rounded-lg border bg-black p-6 shadow-md md:mt-0 md:w-1/5" lista={lista} />
         <div className="mt-1 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-4/5">
           <form className="justify-between mb-6 rounded-lg bg-white p-3 sm:justify-start" onSubmit={handleClickConfirmarCompra}>
-            <p className="text-gray-800 font-medium">Información para el envio</p>
-            <div className="mt-2">
-              <label className="block text-sm text-gray-00" for="cus_name">Nombre y Apellido</label>
-              <input onBlur={handleChangeName} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="text" required placeholder="Juan Perez" />
-            </div>
-            <div className="mt-2">
-              <label className="block text-sm text-gray-00" for="cus_name">Telefono</label>
-              <input onBlur={handleChangeTelefono} className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="tel" required placeholder="555555" />
-            </div>
-            <div className="mt-2">
-              <label onBlur={handleChangeEmail} className="block text-sm text-gray-600" for="cus_email">Email</label>
-              <input className="w-full px-5  py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="ejemplo@ejemplo.com" />
-            </div>
-            <div className="mt-2">
-              <label className=" block text-sm text-gray-600" for="cus_email">Direccion de Entrega</label>
-              <input onBlur={handleChangeDireccion} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Calle y No de Puerta" />
-            </div>
-            <div className="mt-2">
-              <label className="hidden text-sm block text-gray-600" for="cus_email">Ciudad</label>
-              <input onBlur={handleChangeCiudad} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Ciudad" />
-            </div>
-            <div className="inline-block mt-2 w-1/2 pr-1">
-              <label className="hidden block text-sm text-gray-600" for="cus_email">Departamento</label>
-              <input onBlur={handleChangeDepartamento} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Departamento" />
-            </div>
-            <div className="inline-block mt-2 -mx-1 pl-1 w-1/2">
-              <label className="hidden block text-sm text-gray-600" for="cus_email">Zip</label>
-              <input onBlur={handleChangeZip} className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="text" required placeholder="Zip" />
-            </div>
-            <p className="mt-6 text-gray-800 font-medium">Informacion de Pago</p>
-            <div className="mt-2">
-              <label className="block text-sm text-gray-600" for="cus_name">Titular de Tarjeta</label>
-              <input className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="text" required placeholder="Juan Perez" />
-            </div>
-            <div className="mt-2">
-              <label className="block text-sm text-gray-600" for="cus_name">Numero de Tarjeta</label>
-              <input className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_name" name="cus_name" type="number" required placeholder="123456789" />
-            </div>
-            <div className="mt-2 inline-block mt-2 w-1/2 pr-1">
-              <label className="hidden block text-sm text-gray-600" for="cus_email">Expiracion</label>
-              <input className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="cus_email" name="cus_email" type="month" required placeholder="MM/AA" />
-            </div>
-            <div className="mt-2 inline-block mt-2 w-1/2 pr-1">
-              <label className="hidden block text-sm text-gray-600" for="cus_email">CVC</label>
-              <input className="w-full px-2 py-2 text-gray-700 bg-gray-100 rounded" id="number" name="cus_email" type="number" required placeholder="CVC" />
-            </div>
+            
+            <div className="mb-2 flex justify-between">
+                <p className="text-gray-700">Usuario</p>
+                <p className="text-gray-700"></p>
+              </div>
 
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700">Subtotal</p>

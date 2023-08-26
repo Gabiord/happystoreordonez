@@ -5,10 +5,13 @@ import Carrito from "./Carrito";
 import LandingPage from "./LandingPage"
 import TrackingPage from "./TrackingPage";
 import SessionPage from "./SessionPage"
-const axios = require('axios').default;
+import Chat from "./Chat"
+import Administrador from "./Administrador";
+import ResetPassword from "./ResetPassword";
+import SendMailToResetPassword from "./SendMailToResetPassword";
 
+function Main(children) {
 
-function Main() {
     return (
         <main>
             <Routes>
@@ -19,6 +22,10 @@ function Main() {
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/tracking/:id" element={<TrackingPage />} />
                 <Route path="/session" element={<SessionPage/>} />
+                <Route path="/chat" element={<Chat children= {children}/>} />
+                <Route path="/admin/users" element= {<Administrador/>} />
+                <Route path="/resetpassword/" element= {<SendMailToResetPassword/>} />
+                <Route path="/resetpassword/:token" element= {<ResetPassword/>} />
             </Routes>
         </main>
     )

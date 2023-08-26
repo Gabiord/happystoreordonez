@@ -13,7 +13,7 @@ function ItemListContainer() {
 
     useEffect(() => {
         Loading.standard('Cargando', { svgColor: '#4b88a2' });
-        axios.get("http://localhost:8080/api/products/")
+        axios.get("https://fullstackcoderhouse-production.up.railway.app/api/products/")
             .then(result => {
                 const products = result.data.payload
                 setProductos(products)
