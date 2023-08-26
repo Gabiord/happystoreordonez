@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/happystoreordonez/static/css/main.158a5025.css",
-    "main.js": "/happystoreordonez/static/js/main.29fff561.js",
-    "static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.jpg": "/happystoreordonez/static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.e5418e04146b17da7ed9.jpg",
-    "static/media/logo512.png": "/happystoreordonez/static/media/logo512.21ba9e9b68b5bf57c7e8.png",
-    "index.html": "/happystoreordonez/index.html",
-    "main.158a5025.css.map": "/happystoreordonez/static/css/main.158a5025.css.map",
-    "main.29fff561.js.map": "/happystoreordonez/static/js/main.29fff561.js.map"
+    "main.css": "/static/css/main.ece9bef8.css",
+    "main.js": "/static/js/main.47edb63d.js",
+    "static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.jpg": "/static/media/happy-young-company-smiling-friends-excited-park-man-women-having-fun-together.e5418e04146b17da7ed9.jpg",
+    "static/media/logo512.png": "/static/media/logo512.21ba9e9b68b5bf57c7e8.png",
+    "index.html": "/index.html",
+    "main.ece9bef8.css.map": "/static/css/main.ece9bef8.css.map",
+    "main.47edb63d.js.map": "/static/js/main.47edb63d.js.map"
   },
   "entrypoints": [
-    "static/css/main.158a5025.css",
-    "static/js/main.29fff561.js"
+    "static/css/main.ece9bef8.css",
+    "static/js/main.47edb63d.js"
   ]
 }
