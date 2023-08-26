@@ -7,7 +7,7 @@ import axios from "axios";
 import { getToken } from "./utils";
 
 
-const apiURL = "https://fullstackcoderhouse-production.up.railway.app/api/sessions/current"
+const apiURL = "/api/sessions/current"
 
 const token = getToken()
 
