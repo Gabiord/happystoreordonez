@@ -1,60 +1,59 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from "../images/logo512.png"
-import { Link, useLoaderData } from "react-router-dom"
-import CartWidget from './CartWidget'
-import SessionWidget from './SessionWidget'
-import SessionWidgetIniciado from './SessionWitgetIniciado'
+import { Fragment, useState } from "react";
+import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import logo from "../images/logo512.png";
+import { Link } from "react-router-dom";
+import CartWidget from "./CartWidget";
 
 const navigation = {
   categories: [
     {
-      id: 'Categorias',
-      name: 'Categorias',
+      id: "Categorias",
+      name: "Categorias",
       featured: [
         {
-          name: 'Ropa de Mujer',
+          name: "Ropa de Mujer",
           href: "products/category/women's clothing",
-          imageSrc: 'https://img.freepik.com/free-photo/dreamy-young-woman-sunglasses-looking-front_197531-16739.jpg?w=900&t=st=1675964848~exp=1675965448~hmac=0ef3ad8f24703cbc3a0bb54cbb8cd5e9edfb82c53b3e7b9734ef28ab729ce59e',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+          imageSrc:
+            "https://img.freepik.com/free-photo/dreamy-young-woman-sunglasses-looking-front_197531-16739.jpg?w=900&t=st=1675964848~exp=1675965448~hmac=0ef3ad8f24703cbc3a0bb54cbb8cd5e9edfb82c53b3e7b9734ef28ab729ce59e",
+          imageAlt:
+            "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
-          name: 'Ropa de Hombre',
+          name: "Ropa de Hombre",
           href: "products/category/men's clothing",
-          imageSrc: 'https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=900&t=st=1675964973~exp=1675965573~hmac=0ce706d63c3580b50b6003ac27db8d8ad8370c4c1907f6ab4429f7bb51d767f8',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          imageSrc:
+            "https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=900&t=st=1675964973~exp=1675965573~hmac=0ce706d63c3580b50b6003ac27db8d8ad8370c4c1907f6ab4429f7bb51d767f8",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
-          name: 'Accesorios',
+          name: "Accesorios",
           href: "products/category/accessories",
-          imageSrc: 'https://img.freepik.com/free-photo/little-socks-with-birthday-celebration-pattern_53876-105716.jpg?w=740&t=st=1675965152~exp=1675965752~hmac=6489f58f5dc3c576ef8a1c06237404231fd69a26548ab766fb3270a7498f69c3',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          imageSrc:
+            "https://img.freepik.com/free-photo/little-socks-with-birthday-celebration-pattern_53876-105716.jpg?w=740&t=st=1675965152~exp=1675965752~hmac=6489f58f5dc3c576ef8a1c06237404231fd69a26548ab766fb3270a7498f69c3",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
-          name: 'Ropa de niños',
+          name: "Ropa de niños",
           href: "products/category/kid's clothing",
-          imageSrc: 'https://img.freepik.com/free-photo/banner-with-surprised-children-peeking-edge_155003-10104.jpg?w=900&t=st=1675965043~exp=1675965643~hmac=33e8cd4caafcfc9bd804d92e0a4dfa93c601c72651b56523ea5e81db34e4d8bf',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          imageSrc:
+            "https://img.freepik.com/free-photo/banner-with-surprised-children-peeking-edge_155003-10104.jpg?w=900&t=st=1675965043~exp=1675965643~hmac=33e8cd4caafcfc9bd804d92e0a4dfa93c601c72651b56523ea5e81db34e4d8bf",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
-      ]
-    }
-  ]
-}
+      ],
+    },
+  ],
+};
 
-
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 function NavBar(children) {
-
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
-
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40" onClose={setOpen}>
@@ -94,18 +93,36 @@ function NavBar(children) {
 
                 {/* Links */}
                 <Tab.Group as="div" className="mt-2">
-                  <h1 className='mt-2 block text-xl tracking-normal text-gray-900 pt-8 pl-20'>Categorias</h1>
+                  <h1 className="mt-2 block text-xl tracking-normal text-gray-900 pt-8 pl-20">
+                    Categorias
+                  </h1>
                   <Tab.Panels as={Fragment}>
                     {navigation.categories.map((category) => (
-                      <Tab.Panel key={category.name} className="space-y-10 px-4 pt-10 pb-15">
+                      <Tab.Panel
+                        key={category.name}
+                        className="space-y-10 px-4 pt-10 pb-15"
+                      >
                         <div className="grid grid-cols-2 gap-x-4">
                           {category.featured.map((item) => (
-                            <div key={item.name} className="group relative text-sm">
+                            <div
+                              key={item.name}
+                              className="group relative text-sm"
+                            >
                               <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                <img src={item.imageSrc} alt={item.imageAlt} className="object-cover object-center" />
+                                <img
+                                  src={item.imageSrc}
+                                  alt={item.imageAlt}
+                                  className="object-cover object-center"
+                                />
                               </div>
-                              <Link to={item.href} className="mt-2 block font-medium text-gray-900 pb-8">
-                                <span className="absolute inset-0 z-10" aria-hidden="true" />
+                              <Link
+                                to={item.href}
+                                className="mt-2 block font-medium text-gray-900 pb-8"
+                              >
+                                <span
+                                  className="absolute inset-0 z-10"
+                                  aria-hidden="true"
+                                />
                                 {item.name}
                               </Link>
                             </div>
@@ -115,7 +132,6 @@ function NavBar(children) {
                     ))}
                   </Tab.Panels>
                 </Tab.Group>
-
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -127,7 +143,10 @@ function NavBar(children) {
           Envios Gratis a partir de $ 1.000
         </p>
 
-        <nav aria-label="Top" className="mx-auto px-4 sm:px-6 lg:px-10 bg-[#F8DD6E]">
+        <nav
+          aria-label="Top"
+          className="mx-auto px-4 sm:px-6 lg:px-10 bg-[#F8DD6E]"
+        >
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
               <button
@@ -141,7 +160,7 @@ function NavBar(children) {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <Link to="/">
+                <Link to="/happystoreordonez">
                   <img
                     className="h-16 w-auto"
                     src={logo}
@@ -168,7 +187,10 @@ function NavBar(children) {
                           >
                             <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
                               {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                              <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+                              <div
+                                className="absolute inset-0 top-1/2 bg-white shadow"
+                                aria-hidden="true"
+                              />
 
                               <div className="relative bg-white">
                                 Categorias
@@ -176,7 +198,10 @@ function NavBar(children) {
                                   <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
-                                        <div key={item.name} className="group relative text-base sm:text-sm">
+                                        <div
+                                          key={item.name}
+                                          className="group relative text-base sm:text-sm"
+                                        >
                                           <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                                             <img
                                               src={item.imageSrc}
@@ -184,14 +209,19 @@ function NavBar(children) {
                                               className="object-cover object-center"
                                             />
                                           </div>
-                                          <Link to={item.href} className="mt-6 block font-medium text-gray-900">
-                                            <span className="absolute inset-0 z-10" aria-hidden="true" />
+                                          <Link
+                                            to={item.href}
+                                            className="mt-6 block font-medium text-gray-900"
+                                          >
+                                            <span
+                                              className="absolute inset-0 z-10"
+                                              aria-hidden="true"
+                                            />
                                             {item.name}
                                           </Link>
                                         </div>
                                       ))}
                                     </div>
-
                                   </div>
                                 </div>
                               </div>
@@ -201,13 +231,20 @@ function NavBar(children) {
                       )}
                     </Popover>
                   ))}
-
                 </div>
               </Popover.Group>
-                                        
-              <div className="ml-auto flex items-center">
 
-              {children.children == null ? <SessionWidget /> : < SessionWidgetIniciado/> }
+              <div className="ml-auto flex items-center">
+                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+                  <div class="flow-root">
+                    <a
+                      href="/session"
+                      class="-m-2 block p-2 font-medium text-gray-900"
+                    >
+                      Iniciar Sesion
+                    </a>
+                  </div>
+                </div>
 
                 {/* Cart */}
                 <CartWidget />
@@ -217,7 +254,7 @@ function NavBar(children) {
         </nav>
       </header>
     </div>
-  )
+  );
 }
 
 export default NavBar;
